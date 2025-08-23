@@ -1,0 +1,126 @@
+QUESTIONS
+
+1. Find the teachers who teach "Mathematics".
+
+SELECT first_name, last_name FROM Teachers JOIN Subjects ON Teachers.subject_id = Subjects.subject_id WHERE Subjects.subject_name = 'Mathematics';
+
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Alice      | Johnson   |
++------------+-----------+
+1 row in set (0.02 sec)
+
+
+2. List the grades of all students for each subject.
+
+
+SELECT Students.first_name, Students.last_name, Subjects.subject_name, Grades.grade FROM Grades JOIN Students ON Grades.student_id = Students.student_id JOIN Subjects ON Grades.subject_id = Subjects.subject_id ORDER BY Students.student_id, Subjects.subject_id;
+
+
++------------+-----------+--------------+-------+
+| first_name | last_name | subject_name | grade |
++------------+-----------+--------------+-------+
+| John       | Doe       | Mathematics  | A     |
+| John       | Doe       | Science      | B     |
+| John       | Doe       | English      | A     |
+| Emma       | Brown     | Mathematics  | B     |
+| Emma       | Brown     | History      | C     |
+| Michael    | Taylor    | English      | A     |
+| Olivia     | Anderson  | Mathematics  | B     |
+| Sophia     | Thomas    | Science      | A     |
+| James      | Jackson   | History      | B     |
++------------+-----------+--------------+-------+
+9 rows in set (0.01 sec)
+
+
+3. Find students with perfect attendance (e.g., never marked "Absent").
+
+SELECT DISTINCT Students.student_id, Students.first_name, Students.last_name FROM Students LEFT JOIN Attendance ON Students.student_id = Attendance.student_id WHERE Attendance.status != 'Absent' OR Attendance.status IS NULL;
+
++------------+------------+-----------+
+| student_id | first_name | last_name |
++------------+------------+-----------+
+|          1 | John       | Doe       |
+|          2 | Emma       | Brown     |
+|          3 | Michael    | Taylor    |
+|          4 | Olivia     | Anderson  |
+|          5 | Sophia     | Thomas    |
++------------+------------+-----------+
+5 rows in set (0.01 sec)
+
+
+4. List classes and the teachers assigned to each class.
+
+SELECT Classes.class_name, Teachers.first_name, Teachers.last_name FROM Classes JOIN Teachers ON Classes.teacher_id = Teachers.teacher_id;
+
++------------+------------+-----------+
+| class_name | first_name | last_name |
++------------+------------+-----------+
+| 10A        | Alice      | Johnson   |
+| 10B        | Bob        | Smith     |
+| 11A        | Carol      | Davis     |
+| 11B        | David      | Wilson    |
+| 12A        | Eve        | Martinez  |
++------------+------------+-----------+
+5 rows in set (0.01 sec)
+
+5. Find all students who received a grade of "A" in any subject.
+
+SELECT Students.first_name, Students.last_name, Subjects.subject_name, Grades.grade FROM Grades JOIN Students ON Grades.student_id = Students.student_id JOIN Subjects ON Grades.subject_id = Subjects.subject_id WHERE Grades.grade = 'A';
+
+
++------------+-----------+--------------+-------+
+| first_name | last_name | subject_name | grade |
++------------+-----------+--------------+-------+
+| John       | Doe       | Mathematics  | A     |
+| Michael    | Taylor    | English      | A     |
+| Sophia     | Thomas    | Science      | A     |
+| John       | Doe       | English      | A     |
++------------+-----------+--------------+-------+
+4 rows in set (0.01 sec)
+
+
+6. Update the class of the student with student_id = 3 to "Grade 10".
+
+UPDATE Students SET class = 'Grade 10' WHERE student_id = 3;
+
+mysql> UPDATE Students SET class = 'Grade 10' WHERE student_id = 3;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+7. Change the subject_name of the subject with subject_id = 2 to "Physics".
+
+UPDATE Subjects SET subject_name = 'Physics' WHERE subject_id = 2;
+
+mysql> UPDATE Subjects SET subject_name = 'Physics' WHERE subject_id = 2;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+8. Mark all students as "Present" in the Attendance table for today's date.
+
+UPDATE Attendance SET status = 'Present' WHERE date = CURDATE();
+
+mysql> UPDATE Attendance SET status = 'Present' WHERE date = CURDATE();
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+
+9. Add a new column email to the Teachers table to store the teacher's email addresses.
+
+ALTER TABLE Teachers ADD email VARCHAR(100);
+
+mysql> ALTER TABLE Teachers ADD email VARCHAR(100);
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+10. Modify the Grades table to change the data type of the grade column from CHAR(1) to VARCHAR(2) to allow grades like "A+". 
+
+ALTER TABLE Grades MODIFY grade VARCHAR(2);
+
+mysql> ALTER TABLE Grades MODIFY grade VARCHAR(2);
+Query OK, 9 rows affected (0.25 sec)
+Records: 9  Duplicates: 0  Warnings: 0
