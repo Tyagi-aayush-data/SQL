@@ -120,11 +120,3 @@ MODIFY grade VARCHAR(2);
 1. Import your schema into **MySQL** or compatible RDBMS.  
 2. Run the queries step by step in your SQL client (MySQL CLI, Workbench, etc.).  
 3. Check results and modify as per your dataset.  
-
----
-
-## 📄 License
-This project is for learning and demonstration purposes.  
-You may reuse or adapt the queries with attribution.
-
----
